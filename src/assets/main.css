@@ -1,0 +1,24 @@
+@import './base.css';
+
+#app {
+  position: relative;
+  height: 100vh;
+  margin: 0 auto;
+  font-weight: normal;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: #00bd7e;
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}

@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .place-flex-end {
+      place-self: flex-end;
+    }
+  }
