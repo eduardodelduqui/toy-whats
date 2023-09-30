@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { useUserStore } from './user'
-import { decryptMessage } from '../utils/crypto';
 
 export const useMessageStore = defineStore({
   id: 'messages',

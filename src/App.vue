@@ -4,7 +4,7 @@
   import AuthenticationPage from './views/AuthenticationPage.vue';
   import { useSocketStore } from './stores/socket'
   import { useMessageStore } from './stores/messageStore';
-  import { decryptMessage } from './utils/crypto';
+  import { decryptMessage } from './utils/crypto'
   import { useUserStore } from './stores/user'
 
   let authenticated = ref(false)
@@ -18,17 +18,20 @@
   })
 
   socket.socket.on('message', async (message) => {
-    const decryptedMessage = await decryptMessage(message.content, message.sender)
-    message.content = decryptedMessage
-    messageStore.addMessage(message)
+    decryptMessage(message.content, message.sender)
+      .then((decryptedMessage) => {
+        message.content = decryptedMessage
+        messageStore.addMessage(message)
+      })
   });
 
   socket.socket.on('initial-messages', async (messages) => {
     messages.forEach(async (message) => {
-
-      const decryptedMessage = await decryptMessage(message.content, message.sender)
-      message.content = decryptedMessage
-      messageStore.addMessage(message)
+      decryptMessage(message.content, message.sender)
+        .then((decryptedMessage) => {
+          message.content = decryptedMessage
+          messageStore.addMessage(message)
+        })
     })
   });
   

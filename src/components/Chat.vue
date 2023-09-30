@@ -1,11 +1,12 @@
 <script setup>
-import AppInput from './AppInput.vue';
 import { useSocketStore } from '../stores/socket';
 import { useMessageStore } from '../stores/messageStore';
 import { useUserStore } from '../stores/user';
 import { ref, watchEffect } from 'vue';
 import { encryptMessage } from '../utils/crypto'
+import AppInput from './AppInput.vue';
 import Message from './Message.vue';
+import ChatHeader from './ChatHeader.vue';
 
 const props = defineProps(['currentConversation', 'isNewConversation'])
 
@@ -18,7 +19,6 @@ const user = ref('')
 const messages = ref('')
 const myself = userStore.user
 
-
 const sendMessage = async (content) => {
   const message = {
     sender: userStore.user,
@@ -27,9 +27,11 @@ const sendMessage = async (content) => {
     content
   }
 
-  const encryptedMessage = await encryptMessage(message.content, message.sender);
-  socket.sendMessage({target: message.target, message: encryptedMessage})
-  messageStore.addMessage(message)
+  encryptMessage(message.content, message.sender)
+    .then((encryptedMessage) => {
+      socket.sendMessage({target: message.target, message: encryptedMessage})
+      messageStore.addMessage(message)
+    })
 }
 
 watchEffect(() => {
@@ -40,22 +42,24 @@ watchEffect(() => {
 
 <template>
   <section class="w-full h-full flex flex-col">
-    <header class="flex items-center gap-3 bg-[#202c33] py-3 px-4">
-      <!-- Transformar em componente -->
-      <div class="h-10 w-10 bg-slate-300 rounded-full"></div>
-      <div class="text-white text-base">
-        {{ user?.phone }}
+    <ChatHeader
+      v-if="user"
+      :user="user"
+      class="flex items-center gap-3 bg-[#202c33] py-3 px-4"
+    />
+    <div class="h-full w-full relative">
+      <div class="messages absolute w-full h-full flex flex-col px-16 py-4 overflow-y-scroll scrollbar scroll-py-4">
+        <div class="flex flex-col mt-auto">
+          <Message
+            v-for="(message, index) in messages"
+            :key="index"
+            class="bg-[#17574b] text-white w-max py-1 px-3 my-2 rounded-lg"
+            :class="message.phone === myself.phone ? 'self-end' : 'self-start'"
+            :message="message"
+          >
+          </Message>
+        </div>
       </div>
-    </header>
-    <div class="messages h-full w-full grow flex flex-col p-16">
-      <Message
-        v-for="(message, index) in messages"
-        :key="index"
-        class="bg-[#17574b] text-white w-max py-1 px-3 my-2 rounded-lg"
-        :class="message.phone === myself.phone ? 'self-end' : 'self-start'"
-        :message="message"
-      >
-      </Message>
     </div>
     <div class="py-3 px-16 bg-[#202c33]">
       <input

@@ -3,7 +3,15 @@
 @tailwind utilities;
 
 @layer components {
-    .place-flex-end {
-      place-self: flex-end;
-    }
+  .place-flex-end {
+    place-self: flex-end;
   }
+
+  .scrollbar::-webkit-scrollbar {
+    width: 6px; /* Largura da barra de rolagem */
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888; /* Cor da barra de rolagem */
+  }
+}

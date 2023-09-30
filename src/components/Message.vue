@@ -5,15 +5,10 @@ const props = defineProps({
   message: {
     type: Object,
     required: true
-  },
-  isSentByMe: {
-    type: Boolean,
-    required: true
   }
 })
 
 const message = ref(props.message);
-const isSentByMe = ref(props.isSentByMe);
 
 const formattedTimestamp = computed(() => {
   const timestampDate = new Date(message.value.timestamp);

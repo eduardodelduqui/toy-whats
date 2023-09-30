@@ -8,7 +8,7 @@ export const useSocketStore = defineStore({
   }),
   actions: {
     connect() {
-			this.socket = io('http://localhost:3000', {
+			this.socket = io('http://localhost:3033', {
         auth: {
           token: localStorage.getItem('token')
         }

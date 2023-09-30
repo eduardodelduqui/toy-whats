@@ -25,25 +25,24 @@ const newConversation = () => {
   <main class="h-full bg-[#0c1317] overflow-hidden">
     <div class="w-full absolute top-5 max-h-[calc(100%-40px)] h-full">
       <div class="w-full h-full flex max-w-screen-2xl mx-auto bg-[#111b21]">
-        <div class="w-full max-w-md border-r border-[#5f5f5f6b] pr-3">
-          <!-- <div class="p-2">
-            <input type="text" class="mb-2 text-gray-900" v-model="remetente">
-          </div> -->
+        <div class="w-full max-w-md border-r border-[#5f5f5f6b]">
           <div
             @click="newConversation()"
-            class="flex items-center gap-4 p-4 text-white cursor-pointer"
+            class="flex items-center gap-4 p-4 text-white cursor-pointer bg-[#202c33]"
           >
             <div class="border w-8 h-8 rounded-full relative">
               <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold">+</span>
             </div>
             <p class="flex-grow font-bold">Nova Conversa</p>
           </div>
-          <Card
-            v-for="message in messages"
-            :key="message.user.phone"
-            :message="message"
-            @click="selectConversation(message.user)"
-          />
+          <div class="p-4">
+            <Card
+              v-for="message in messages"
+              :key="message.user.phone"
+              :message="message"
+              @click="selectConversation(message.user)"
+            />
+          </div>
         </div>
         <div class="w-full">
           <Chat
