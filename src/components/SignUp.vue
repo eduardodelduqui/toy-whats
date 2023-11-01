@@ -12,7 +12,7 @@ const user = ref({
 const emit = defineEmits(['changeToSignIn'])
 
 const onClickToSignUp = () => {
-  fetch('http://localhost:4000/users', {
+  fetch('http://localhost:4040/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
